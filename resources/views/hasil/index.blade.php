@@ -147,7 +147,7 @@
 <div class="container-fluid">
 
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">Hasil Seleksi</h1>
+<h1 class="h3 mb-2 text-gray-800">Hasil Rekomendasi</h1>
 
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
@@ -160,7 +160,7 @@
                     <tr>
                         <th>No</th>
                         <th>Nama</th>
-                        <th>Nilai Seleksi</th>
+                        <th>Nilai</th>
                         <th>Ranking</th>
                     </tr>
                 </thead>

@@ -7,7 +7,7 @@
         <div class="col-md-12 border-right">
             <div class="p-3 py-5">
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h3 class="text-right">Reset Password</h3>
+                    <h3 class="text-right">Ubah Password</h3>
                 </div>
                     @if(session('success'))
                         <div class="alert alert-success">
@@ -63,7 +63,7 @@
                     </div>
                 </div>
                 <div class="mt-5 text-center">
-                <button type="submit" class="btn btn-primary">Reset Password</button>
+                <button type="submit" class="btn btn-primary">Ubah Password</button>
                 </div>
             </div>
         </div>  

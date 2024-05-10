@@ -40,7 +40,7 @@ class NilaiKriteriaSeeder extends Seeder
             /**
              * Tempat Tinggal
              */
-            ['id_kriteria' => 6, 'nama_kriteria' => 'Non Pantai', 'nilai' => 50],
+            ['id_kriteria' => 6, 'nama_kriteria' => 'Non Panti', 'nilai' => 50],
             ['id_kriteria' => 6, 'nama_kriteria' => 'Panti', 'nilai' => 100],
 
             /**
