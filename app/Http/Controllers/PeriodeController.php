@@ -41,7 +41,7 @@ class PeriodeController extends Controller
             'tgl_buka' => $request->tgl_buka,
             'tgl_tutup' => $request->tgl_tutup,
             //'status_periode' => $request->status_periode,
-            'kuota' => $kuota,
+            'kuota' => $request->kuota,
             'pengumuman' => $pengumuman,
         ]);
 

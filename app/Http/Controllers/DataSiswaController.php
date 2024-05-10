@@ -138,6 +138,50 @@ class DataSiswaController extends Controller
             'nama_ibu.required' => 'Nama Ibu Wajib di Isi.',
         ]);
 
+        if ($request->hasFile('foto')) {
+            $foto_file = $request->file('foto');
+            $foto_ekstensi = $foto_file->extension();
+            $nama_foto = date('ymdhis') . "." . $foto_ekstensi;
+            $foto_file->move(public_path('picture/siswa'), $nama_foto);
+            $foto = $nama_foto;
+        }
+        if ($request->hasFile('raport')) {
+            $raport_file = $request->file('raport');
+            $nama_file = date('ymdhis') . '.' . $raport_file->getClientOriginalExtension();
+            $raport_file->move(public_path('data/raport'), $nama_file);
+            $raport_path = 'data/raport/' . $nama_file;
+            $raport = $nama_file;
+        } 
+        if ($request->hasFile('surat_kematian')) {
+            $surat_kematian_file = $request->file('surat_kematian');
+            $nama_file = date('ymdhis') . '.' . $surat_kematian_file->getClientOriginalExtension();
+            $surat_kematian_file->move(public_path('data/sk'), $nama_file);
+            $surat_kematian_path = 'data/sk/' . $nama_file;
+            $surat_kematian = $nama_file;
+        } 
+        if ($request->hasFile('kk')) {
+            $kk_file = $request->file('kk');
+            $nama_file = date('ymdhis') . '.' . $kk_file->getClientOriginalExtension();
+            $kk_file->move(public_path('data/kk'), $nama_file);
+            $kk_path = 'data/kk/' . $nama_file;
+            $kk = $nama_file;
+        }
+        if ($request->hasFile('ktp')) {
+            $ktp_file = $request->file('ktp');
+            $nama_file = date('ymdhis') . '.' . $ktp_file->getClientOriginalExtension();
+            $ktp_file->move(public_path('data/ktp'), $nama_file);
+            $ktp_path = 'data/ktp/' . $nama_file;
+            $ktp = $nama_file;  
+        }
+        if ($request->hasFile('sktm')) {
+            $sktm_file = $request->file('sktm');
+            $nama_file = date('ymdhis') . '.' . $sktm_file->getClientOriginalExtension();
+            $sktm_file->move(public_path('data/sktm'), $nama_file);
+            $sktm_path = 'data/sktm/' . $nama_file;
+            $sktm = $nama_file;
+        }
+
+
         DataSiswa::create([
             'nama' => $request->nama,
             'nik'=> $request->nik,

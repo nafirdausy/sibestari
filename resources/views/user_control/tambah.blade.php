@@ -3,7 +3,7 @@
     <div class="col-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title mb-4">Tambah User</h4>
+                <h4 class="card-title mb-4">Tambah Koordinator</h4>
                 @if ($errors->any())
                     <div class="alert alert-danger">
                         <ul>
