@@ -1,7 +1,7 @@
 @extends('layouts.index')    
 @if (Auth::user()->role === 'admin')
     @section('navitem')
-        <!-- Divider -->
+<!-- Divider -->
 <hr class="sidebar-divider my-0">
 
 <!-- Nav Item - Dashboard -->
@@ -23,24 +23,25 @@
 <li class="nav-item">
     <a class="nav-link" href="/datasiswa">
         <i class="fas fa-fw fa-folder"></i>
-        <span>Data Siswa</span></a>
+        <span>Data Siswa</span>
+    </a>
 </li>
 
-<!-- Nav Item - Rekomendasi -->
-<li class="nav-item">
-    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsehasil"
-        aria-expanded="true" aria-controls="collapsehasil">
-        <i class="fas fa-fw fa-table"></i>
-        <span>Rekomendasi</span>
-    </a>
-    <div id="collapsehasil" class="collapse" aria-labelledby="headinghasil" data-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">rekomendasi:</h6>
-            <a class="collapse-item" href="/hasil">Hasil Rekomendasi</a>
-            <a class="collapse-item" href="#">Riwayat</a>
-        </div>
-    </div>
-</li>
+    <!-- Nav Item - Rekomendasi -->
+    <li class="nav-item">
+        <a class="nav-link" href="/hasil">
+            <i class="fas fa-fw fa-table"></i>
+            <span>Rekomendasi</span>
+        </a>
+    </li>
+
+    <!-- Nav Item - Penerima -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="/penerima">
+            <i class="fas fa-fw fa-file-alt"></i>
+            <span>Penerima Beasiswa</span>
+        </a>
+    </li>
 
 
 <!-- Divider -->
@@ -55,14 +56,14 @@
 <!-- Nav Item - Koor -->
 <li class="nav-item">
     <a class="nav-link" href="{{ route('usercontrol') }}">
-        <i class="fas fa-fw fa-folder"></i>
+        <i class="fas fa-fw fa-users"></i>
         <span>Data Koordinator</span></a>
 </li>
 
 <!-- Nav Item - Periode -->
 <li class="nav-item">
     <a class="nav-link" href="{{ route('periode') }}">
-        <i class="fas fa-fw fa-chart-area"></i>
+        <i class="fas fa-fw fa-calendar-alt"></i>
         <span>Periode</span></a>
 </li>
 
@@ -76,72 +77,63 @@
     @endsection
 @elseif(Auth::user()->role === 'user')
     @section('navitem')
-    <!-- Divider -->
-    <hr class="sidebar-divider my-0">
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
 
-    <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
-        <a class="nav-link" href="/user">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Dashboard</span></a>
-    </li>
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active">
+                <a class="nav-link" href="/user">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard</span></a>
+            </li>
 
-    <!-- Divider -->
-    <hr class="sidebar-divider">
+            <!-- Divider -->
+            <hr class="sidebar-divider">
 
-    <!-- Heading -->
-    <div class="sidebar-heading">
-        Menu
-    </div>
-
-
-    <!--data siswa-->
-    <li class="nav-item">
-        <a class="nav-link" href="/datasiswa">
-            <i class="fas fa-fw fa-folder"></i>
-            <span>Data Siswa</span></a>
-    </li>
-
-    <!-- Nav Item - Rekomendasi -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsehasil"
-            aria-expanded="true" aria-controls="collapsehasil">
-            <i class="fas fa-fw fa-table"></i>
-            <span>Rekomendasi</span>
-        </a>
-        <div id="collapsehasil" class="collapse" aria-labelledby="headinghasil" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">rekomendasi:</h6>
-                <a class="collapse-item" href="/hasil">Hasil Rekomendasi</a>
-                <a class="collapse-item" href="#">Riwayat</a>
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Siswa
             </div>
-        </div>
-    </li>
 
-               <!-- Divider -->
-               <hr class="sidebar-divider">
 
-    <!-- Heading -->
-    <div class="sidebar-heading">
-        Lembaga
-    </div>
+            <!--data siswa-->
+            <li class="nav-item">
+                <a class="nav-link" href="/datasiswa">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Data Siswa</span></a>
+            </li>
 
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="/profile">
-        <i class="fas fa-fw fa-cog"></i>
-            <span>Profile Lembaga</span>
-        </a>
-    </li>
+            <!-- Nav Item - Penerima -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="/penerima">
+                    <i class="fas fa-fw fa-file-alt"></i>
+                    <span>Penerima Beasiswa</span>
+                </a>
+            </li>
 
-    <!-- Divider -->
-    <hr class="sidebar-divider d-none d-md-block">
+            <!-- Divider -->
+            <hr class="sidebar-divider">
 
-    <!-- Sidebar Toggler (Sidebar) -->
-    <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
-    </div>
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Lembaga
+            </div>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="/profile">
+                <i class="fas fa-fw fa-cog"></i>
+                    <span>Profile Lembaga</span>
+                </a>
+            </li>
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
     @endsection
-@endif
+@endif 
 @section('main')
     <div class="col-12 grid-margin stretch-card">
         <div class="card">

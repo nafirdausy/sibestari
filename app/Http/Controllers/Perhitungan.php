@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\DataSiswa;
 use App\Models\Kriteria;
 use App\Models\Evaluasi;
+use App\Models\Periode;
 use Illuminate\Http\Request;
 
 class Perhitungan extends Controller
@@ -87,7 +88,9 @@ class Perhitungan extends Controller
 
         $normalisationMatrix = $alternatives->map(function ($alternative) use ($sum_kriteria) {
             return [
+                'id' => $alternative->id,
                 'id_siswa' => $alternative->id_siswa,
+                'id_periode' => $alternative->id_periode,
                 'nama_siswa' => $alternative->alternative->nama,
                 'kriteria_1' => $alternative->kriteria_1 / $sum_kriteria['sum_kriteria_1'],
                 'kriteria_2' => $alternative->kriteria_2 / $sum_kriteria['sum_kriteria_2'],
@@ -110,7 +113,9 @@ class Perhitungan extends Controller
 
         $alternatives = $normalisationMatrix->map(function ($alternative) use ($weights) {
             return [
+                'id' => $alternative['id'],
                 'id_siswa' => $alternative['id_siswa'],
+                'id_periode' => $alternative['id_periode'],
                 'nama_siswa' => $alternative['nama_siswa'],
                 'kriteria_1' => $alternative['kriteria_1'] * $weights[0]->bobot,
                 'kriteria_2' => $alternative['kriteria_2'] * $weights[1]->bobot,
@@ -131,7 +136,9 @@ class Perhitungan extends Controller
     {
         $sumKriteria = $normalisedWeightedDecisionMatrix->map(function ($alternative) {
             return [
+                'id' => $alternative['id'],
                 'id_siswa' => $alternative['id_siswa'],
+                'id_periode' => $alternative['id_periode'],
                 'nama_siswa' => $alternative['nama_siswa'],
                 'S+i' => $alternative['kriteria_1'] + $alternative['kriteria_2'] + $alternative['kriteria_3'] + $alternative['kriteria_5'] + $alternative['kriteria_6'],
                 'S-i' => $alternative['kriteria_4'],
@@ -153,7 +160,9 @@ class Perhitungan extends Controller
 
         $relativeWeight = $alternatives->map(function ($alternative) use ($maximisingMinimisingIndex) {
             return [
+                'id' => $alternative['id'],
                 'id_siswa' => $alternative['id_siswa'],
+                'id_periode' => $alternative['id_periode'],
                 'nama_siswa' => $alternative['nama_siswa'],
                 '1/S-i' => 1 / $alternative['S-i'],
             ];
@@ -162,7 +171,9 @@ class Perhitungan extends Controller
 
         $relativeWeightTotal = $alternatives->map(function ($alternative) use ($total) {
             return [
+                'id' => $alternative['id'],
                 'id_siswa' => $alternative['id_siswa'],
+                'id_periode' => $alternative['id_periode'],
                 'nama_siswa' => $alternative['nama_siswa'],
                 'S-i*total' => $alternative['S-i'] * round($total),
             ];
@@ -171,12 +182,14 @@ class Perhitungan extends Controller
 
         $relativeWeightTotal = $alternatives->map(function ($alternative) use ($totalSiTotal, $relativeWeightTotal) {
             $sum = $relativeWeightTotal
-                ->where('id_siswa', $alternative['id_siswa'])
+                ->where('id', $alternative['id'])
                 ->pluck('S-i*total')
                 ->sum();
 
             return [
+                'id' => $alternative['id'],
                 'id_siswa' => $alternative['id_siswa'],
+                'id_periode' => $alternative['id_periode'],
                 'nama_siswa' => $alternative['nama_siswa'],
                 'Qi' => round($alternative['S+i'] + (round($totalSiTotal / round($sum,2),2)), 2),
             ];
@@ -198,16 +211,26 @@ class Perhitungan extends Controller
         $alternatives = $relativeWeight['relativeWeightTotal'];
 
         $quantitativeUtility = $alternatives->map(function ($alternative) use ($relativeWeight) {
+    
+            $Ui = round(($alternative['Qi'] / $relativeWeight['maxQi']) * 100);
+        
+            // Simpan nilai Ui ke dalam tabel database
+            \DB::table('evaluasi') 
+                ->where('id', $alternative['id'])
+                ->update(['hasil' => $Ui]);
+    
+            
             return [
+                'id' => $alternative['id'],
                 'id_siswa' => $alternative['id_siswa'],
+                'id_periode' => $alternative['id_periode'],
                 'nama_siswa' => $alternative['nama_siswa'],
-                'Ui' => round(($alternative['Qi'] / $relativeWeight['maxQi']) * 100),
+                'Ui' => $Ui,
             ];
         });
-
+    
         return $quantitativeUtility;
     }
-
     /**
      * 7. Ranking
      */

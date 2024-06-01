@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('evaluasi', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('id_users')->constrained('users');
             $table->foreignId('id_siswa')->constrained('datasiswa');
             $table->foreignId('id_periode')->constrained('periode');
             $table->float('kriteria_1')->default(0);
@@ -22,6 +23,7 @@ return new class extends Migration
             $table->float('kriteria_5')->default(0);
             $table->float('kriteria_6')->default(0);
             $table->boolean('sudah_diajukan')->default(false);
+            $table->float('hasil')->default(0);
             $table->timestamps();
         });
     }

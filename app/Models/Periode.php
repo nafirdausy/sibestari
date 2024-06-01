@@ -15,6 +15,7 @@ class Periode extends Model
         'nama_periode',
         'tgl_buka',
         'tgl_tutup',
+        'tgl_pengumuman',
         'status_periode',
         'kuota',
         'pengumuman'
@@ -41,6 +42,16 @@ class Periode extends Model
             $this->status_periode = 'tutup';
         }
         
+    }
+
+    public function penerimaan()
+    {
+        return $this->hasMany(Penerimaan::class, 'id_periode');
+    }
+
+    public function evaluasi()
+    {
+        return $this->hasMany(Evaluasi::class, 'id_periode');
     }
 
 }

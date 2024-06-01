@@ -16,6 +16,7 @@ class DataSiswaSeeder extends Seeder
     {
         $datasiswas = [
         /** 1 */    [
+                    'id_users' => 2,
                     'nama' => 'Rasyid',
                     'nik' => '3507245201010001',
                     'jenis_kelamin' => 'laki-Laki',
@@ -60,6 +61,7 @@ class DataSiswaSeeder extends Seeder
                     'kriteria_6' => 50,
                     ],
         /** 2 */    [
+                    'id_users' => 2,
                     'nama' => 'Tegar',
                     'nik' => '3507245201010002',
                     'jenis_kelamin' => 'laki-Laki',
@@ -104,6 +106,7 @@ class DataSiswaSeeder extends Seeder
                     'kriteria_6' => 100,
                     ],
         /** 3 */    [
+                    'id_users' => 2,
                     'nama' => 'Selvi',
                     'nik' => '3507245201010003',
                     'jenis_kelamin' => 'perempuan',
@@ -148,6 +151,7 @@ class DataSiswaSeeder extends Seeder
                     'kriteria_6' => 50,
                     ],
         /** 4 */    [
+                    'id_users' => 2,
                     'nama' => 'Ratih',
                     'nik' => '3507245201010004',
                     'jenis_kelamin' => 'perempuan',
@@ -192,6 +196,7 @@ class DataSiswaSeeder extends Seeder
                     'kriteria_6' => 50,
                     ],
         /** 5 */    [
+                    'id_users' => 2,
                     'nama' => 'Ristya',
                     'nik' => '3507245201010005',
                     'jenis_kelamin' => 'perempuan',
@@ -236,6 +241,7 @@ class DataSiswaSeeder extends Seeder
                     'kriteria_6' => 50,
                     ],
         /** 6 */    [
+                    'id_users' => 3,
                     'nama' => 'Rahel',
                     'nik' => '3507245201010006',
                     'jenis_kelamin' => 'laki-Laki',
@@ -280,6 +286,7 @@ class DataSiswaSeeder extends Seeder
                     'kriteria_6' => 100,
                     ],
         /** 7 */    [
+                    'id_users' => 3,
                     'nama' => 'Aida',
                     'nik' => '3507245201010007',
                     'jenis_kelamin' => 'perempuan',
@@ -324,6 +331,7 @@ class DataSiswaSeeder extends Seeder
                     'kriteria_6' => 100,
                     ],
         /** 8 */    [
+                    'id_users' => 3,
                     'nama' => 'Palupi',
                     'nik' => '3507245201010008',
                     'jenis_kelamin' => 'perempuan',
@@ -368,6 +376,7 @@ class DataSiswaSeeder extends Seeder
                     'kriteria_6' => 100,
                     ],
         /** 9 */    [
+                    'id_users' => 3,
                     'nama' => 'Tria',
                     'nik' => '3507245201010009',
                     'jenis_kelamin' => 'perempuan',
@@ -412,6 +421,7 @@ class DataSiswaSeeder extends Seeder
                     'kriteria_6' => 100,
                     ],
         /** 10 */    [
+                    'id_users' => 3,
                     'nama' => 'Edi',
                     'nik' => '3507245201010010',
                     'jenis_kelamin' => 'laki-Laki',

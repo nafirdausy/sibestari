@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Periode;
+use App\Models\Evaluasi;
+use App\Models\Penerimaan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
+
 
 class PeriodeController extends Controller
 {
@@ -41,6 +45,7 @@ class PeriodeController extends Controller
             'tgl_buka' => $request->tgl_buka,
             'tgl_tutup' => $request->tgl_tutup,
             //'status_periode' => $request->status_periode,
+            'tgl_pengumuman' => $request->tgl_pengumuman,
             'kuota' => $request->kuota,
             'pengumuman' => $pengumuman,
         ]);
@@ -77,6 +82,7 @@ class PeriodeController extends Controller
         $periode->nama_periode = $request->nama_periode;
         $periode->tgl_buka = $request->tgl_buka;
         $periode->tgl_tutup = $request->tgl_tutup;
+        $periode->tgl_pengumuman = $request->tgl_pengumuman;
         $periode->status_periode = $request->status_periode;
         $periode->kuota = $request->kuota;
         $periode->save();
@@ -85,12 +91,35 @@ class PeriodeController extends Controller
 
         return redirect('/periode');
     }
-    function hapus(Request $request)
+    
+    public function hapus(Request $request)
     {
-        Periode::where('id', $request->id)->delete();
-
+        \DB::transaction(function () use ($request) {
+            // Mencari Periode berdasarkan ID
+            $periode = Periode::findOrFail($request->id);
+    
+            // Menghapus semua penerimaan yang merujuk ke evaluasi dalam periode ini
+            \DB::table('penerimaan')
+                ->whereIn('id_evaluasi', function($query) use ($request) {
+                    $query->select('id')
+                          ->from('evaluasi')
+                          ->where('id_periode', $request->id);
+                })
+                ->delete();
+    
+            // Menghapus semua evaluasi yang merujuk ke periode ini
+            \DB::table('evaluasi')
+                ->where('id_periode', $request->id)
+                ->delete();
+    
+            // Menghapus periode
+            $periode->delete();
+        });
+    
+        // Mengirim pesan sukses ke session
         Session::flash('success', 'Data berhasil dihapus');
-
+    
+        // Mengarahkan kembali ke halaman /periode
         return redirect('/periode');
     }
 }

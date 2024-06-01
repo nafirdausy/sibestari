@@ -47,4 +47,19 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function datasiswa()
+    {
+        return $this->hasMany(DataSiswa::class, 'id_users');
+    }
+
+    public function penerimaan()
+    {
+        return $this->hasMany(Penerimaan::class, 'id_users');
+    }
+
+    public function eval()
+    {
+        return $this->hasMany(Evaluasi::class, 'id_users');
+    }
 }

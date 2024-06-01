@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nama_periode')->unique();
             $table->date('tgl_buka');
             $table->date('tgl_tutup');
+            $table->date('tgl_pengumuman');
             $table->enum('status_periode', ['buka', 'tutup'])->default('buka');
             $table->float('kuota');
             $table->string('pengumuman')->nullable();

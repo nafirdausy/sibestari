@@ -10,6 +10,7 @@ class DataSiswa extends Model
     use HasFactory;
     public $table = 'datasiswa';
     public $fillable = [
+        'id_users',
         'nama',
         'nik',
         'jenis_kelamin',
@@ -53,5 +54,10 @@ class DataSiswa extends Model
         'kriteria_5',
         'kriteria_6',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id_users');
+    }
 
 }

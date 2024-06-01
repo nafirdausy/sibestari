@@ -16,6 +16,7 @@ class EvaluasiSeeder extends Seeder
     {
         $evaluasis = [
         /** 1 */    [
+                    'id_users' => 2,
                     'id_siswa' => 1,
                     'id_periode' => 1,
                     'kriteria_1' => 80,
@@ -27,6 +28,7 @@ class EvaluasiSeeder extends Seeder
                     'sudah_diajukan' => 1,
                     ],
         /** 2 */    [
+            'id_users' => 2,
                     'id_siswa' => 2,
                     'id_periode' => 1,
                     'kriteria_1' => 81,
@@ -38,6 +40,7 @@ class EvaluasiSeeder extends Seeder
                     'sudah_diajukan' => 1,
                     ],
         /** 3 */    [
+            'id_users' => 2,
                     'id_siswa' => 3,
                     'id_periode' => 1,
                     'kriteria_1' => 82,
@@ -49,6 +52,7 @@ class EvaluasiSeeder extends Seeder
                     'sudah_diajukan' => 1,
                     ],
         /** 4 */    [
+            'id_users' => 2,
                     'id_siswa' => 4,
                     'id_periode' => 1,
                     'kriteria_1' => 78,
@@ -60,6 +64,7 @@ class EvaluasiSeeder extends Seeder
                     'sudah_diajukan' => 1,
                     ],
         /** 5 */    [
+            'id_users' => 2,
                     'id_siswa' => 5,
                     'id_periode' => 1,
                     'kriteria_1' => 84,
@@ -71,6 +76,7 @@ class EvaluasiSeeder extends Seeder
                     'sudah_diajukan' => 1,
                     ],
         /** 6 */    [
+            'id_users' => 3,
                     'id_siswa' => 6,
                     'id_periode' => 1,
                     'kriteria_1' => 83,
@@ -82,6 +88,7 @@ class EvaluasiSeeder extends Seeder
                     'sudah_diajukan' => 1,
                     ],
         /** 7 */    [
+            'id_users' => 3,
                     'id_siswa' => 7,
                     'id_periode' => 1,
                     'kriteria_1' => 88,
@@ -93,6 +100,7 @@ class EvaluasiSeeder extends Seeder
                     'sudah_diajukan' => 1,
                     ],
         /** 8 */    [
+            'id_users' => 3,
                     'id_siswa' => 8,
                     'id_periode' => 1,
                     'kriteria_1' => 90,
@@ -104,6 +112,7 @@ class EvaluasiSeeder extends Seeder
                     'sudah_diajukan' => 1,
                     ],
         /** 9 */    [
+            'id_users' => 3,
                     'id_siswa' => 9,
                     'id_periode' => 1,
                     'kriteria_1' => 87,
@@ -115,6 +124,7 @@ class EvaluasiSeeder extends Seeder
                     'sudah_diajukan' => 1,
                     ],
         /** 10 */    [
+            'id_users' => 3,
                     'id_siswa' => 10,
                     'id_periode' => 1,
                     'kriteria_1' => 80,
@@ -126,6 +136,7 @@ class EvaluasiSeeder extends Seeder
                     'sudah_diajukan' => 1,
                     ],
         /** 11 */   [
+            'id_users' => 2,
                     'id_siswa' => 1,
                     'id_periode' => 2,
                     'kriteria_1' => 88,
@@ -137,6 +148,7 @@ class EvaluasiSeeder extends Seeder
                     'sudah_diajukan' => 1,
                     ],
         /** 12 */   [
+            'id_users' => 2,
                     'id_siswa' => 2,
                     'id_periode' => 2,
                     'kriteria_1' => 80,
@@ -148,6 +160,7 @@ class EvaluasiSeeder extends Seeder
                     'sudah_diajukan' => 1,
                     ],
         /** 13 */   [
+            'id_users' => 2,
                     'id_siswa' => 3,
                     'id_periode' => 2,
                     'kriteria_1' => 83,
@@ -159,6 +172,7 @@ class EvaluasiSeeder extends Seeder
                     'sudah_diajukan' => 1,
                     ],
         /** 14 */   [
+            'id_users' => 2,
                     'id_siswa' => 4,
                     'id_periode' => 2,
                     'kriteria_1' => 79,
@@ -170,6 +184,7 @@ class EvaluasiSeeder extends Seeder
                     'sudah_diajukan' => 1,
                     ],
         /** 15 */   [
+            'id_users' => 2,
                     'id_siswa' => 5,
                     'id_periode' => 2,
                     'kriteria_1' => 82,
@@ -181,6 +196,7 @@ class EvaluasiSeeder extends Seeder
                     'sudah_diajukan' => 1,
                     ],
         /** 16 */   [
+            'id_users' => 3,
                     'id_siswa' => 6,
                     'id_periode' => 2,
                     'kriteria_1' => 90,
@@ -192,6 +208,7 @@ class EvaluasiSeeder extends Seeder
                     'sudah_diajukan' => 1,
                     ],
         /** 17 */   [
+            'id_users' => 3,
                     'id_siswa' => 7,
                     'id_periode' => 2,
                     'kriteria_1' => 84,
@@ -203,6 +220,7 @@ class EvaluasiSeeder extends Seeder
                     'sudah_diajukan' => 1,
                     ],
         /** 18 */   [
+            'id_users' => 3,
                     'id_siswa' => 8,
                     'id_periode' => 2,
                     'kriteria_1' => 81,
@@ -214,6 +232,7 @@ class EvaluasiSeeder extends Seeder
                     'sudah_diajukan' => 1,
                     ],
         /** 19 */   [
+            'id_users' => 3,
                     'id_siswa' => 9,
                     'id_periode' => 2,
                     'kriteria_1' => 84,
@@ -225,6 +244,7 @@ class EvaluasiSeeder extends Seeder
                     'sudah_diajukan' => 1,
                     ],
         /** 20 */    [
+            'id_users' => 3,
                     'id_siswa' => 10,
                     'id_periode' => 2,
                     'kriteria_1' => 86,
@@ -236,6 +256,7 @@ class EvaluasiSeeder extends Seeder
                     'sudah_diajukan' => 1,
                     ],
         /** 21 */   [
+            'id_users' => 2,
                     'id_siswa' => 1,
                     'id_periode' => 3,
                     'kriteria_1' => 88,
@@ -247,6 +268,7 @@ class EvaluasiSeeder extends Seeder
                     'sudah_diajukan' => 1,
                     ],
         /** 22 */   [
+            'id_users' => 2,
                     'id_siswa' => 2,
                     'id_periode' => 3,
                     'kriteria_1' => 82,
@@ -258,6 +280,7 @@ class EvaluasiSeeder extends Seeder
                     'sudah_diajukan' => 1,
                     ],
         /** 23 */   [
+            'id_users' => 2,
                     'id_siswa' => 3,
                     'id_periode' => 3,
                     'kriteria_1' => 75,

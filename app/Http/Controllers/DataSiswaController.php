@@ -9,20 +9,43 @@ use App\Models\Kriteria;
 use App\Models\Periode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 
 class DataSiswaController extends Controller
 {
-    function index()
+    function index(Request $request)
     {
+        $user = Auth::user();
+        $periode = $request->query('periode'); 
 
-        $data = DataSiswa::all();
-        $dataEvaluasi = Evaluasi::all();
         $dataPeriode = Periode::all();
+        $periodeTerbaru = $periode ? Periode::where('id', $periode)->first() : null;
 
-        return view('data_siswa.index', ['data' => $data, 'dataEvaluasi' => $dataEvaluasi, 'dataPeriode' => $dataPeriode]);
-        //return view('data_siswa.index', ['data' => $data]);  
+        // Jika user adalah admin, ambil semua data
+        if ($user->role == 'admin') {
+            $data = DataSiswa::all();
+        } else {
+            // Jika bukan admin, ambil data yang sesuai dengan user_id
+            $data = DataSiswa::where('id_users', $user->id)->get();
+        }
 
+        $dataEvaluasi = Evaluasi::all();
+ 
+        return view('data_siswa.index', [
+            'data' => $data,
+            'dataEvaluasi' => $dataEvaluasi,
+            'dataPeriode' => $dataPeriode,
+            'periode' => $periode,
+            'periodeTerbaru' => $periodeTerbaru
+        ]);
     }
+
+    public function show(Request $request)
+    {
+        $periode = $request->input('id');
+        return redirect()->route('datasiswa.show', ['periode' => $periode]);
+    }
+
     function detail($id)
     {
         $data = DataSiswa::find($id);
@@ -75,12 +98,35 @@ class DataSiswaController extends Controller
         ]);
         //return view('data_siswa.edit', ['data' => $data]);
     }
-    function hapus(Request $request)
+
+    public function hapus(Request $request)
     {
-        DataSiswa::where('id', $request->id)->delete();
-
-        Session::flash('success', 'Berhasil Hapus Data');
-
+        \DB::transaction(function () use ($request) {
+            // Mencari Periode berdasarkan ID
+            $data = DataSiswa::findOrFail($request->id);
+    
+            // Menghapus semua penerimaan yang merujuk ke evaluasi dalam periode ini
+            \DB::table('penerimaan')
+                ->whereIn('id_evaluasi', function($query) use ($request) {
+                    $query->select('id')
+                          ->from('evaluasi')
+                          ->where('id_siswa', $request->id);
+                })
+                ->delete();
+    
+            // Menghapus semua evaluasi yang merujuk ke periode ini
+            \DB::table('evaluasi')
+                ->where('id_siswa', $request->id)
+                ->delete();
+    
+            // Menghapus periode
+            $data->delete();
+        });
+    
+        // Mengirim pesan sukses ke session
+        Session::flash('success', 'Data berhasil dihapus');
+    
+        // Mengarahkan kembali ke halaman /periode
         return redirect('/datasiswa');
     }
     // new
@@ -181,8 +227,8 @@ class DataSiswaController extends Controller
             $sktm = $nama_file;
         }
 
-
         DataSiswa::create([
+            'id_users' => Auth::id(),
             'nama' => $request->nama,
             'nik'=> $request->nik,
             'jenis_kelamin'=> $request->jenis_kelamin,
@@ -221,7 +267,6 @@ class DataSiswaController extends Controller
             'kriteria_5' => $request->kriteria_5,
             'kriteria_6' => $request->kriteria_6,
         ]);
-
 
         Session::flash('success', 'Data berhasil ditambahkan');
         return redirect('/datasiswa')->with('success', 'Berhasil Menambahkan Data');
@@ -279,11 +324,8 @@ class DataSiswaController extends Controller
             'nama_ibu.required' => 'Nama Ibu Wajib di Isi.',
         ]);
 
-        //$data = $request->all();
-        //$datasiswa = ModelsDataSiswa::findOrFail($id);
         $alternativeName = DataSiswa::find($request->id);
-        //$datapenilaian = ModelsPenilaian::find($request->id);
-
+        $alternativeName->id_siswa = Auth::id();
         $alternativeName->nama = $request->nama;
         $alternativeName->nik= $request->nik;
         $alternativeName->jenis_kelamin= $request->jenis_kelamin;
@@ -332,21 +374,16 @@ class DataSiswaController extends Controller
         Session::flash('success', 'Berhasil Mengubah Data');
         return redirect('/datasiswa');
     }
-    
+
     public function ajukan(Request $request)
     {
-        $periodeTerbuka = Periode::where('status_periode', 'buka')->latest()->first();
-        
-        if (!$periodeTerbuka) {
-            
-            Session::flash('error', 'Tidak ada periode terbuka saat ini.');
-            return redirect('/datasiswa');
-        }
-        
+
+        $periodeTerbaru = Periode::find($request->input('id_periode'));
         $siswa = DataSiswa::where('id', $request->id)->get();
 
         foreach ($siswa as $nilai) {
             Evaluasi::create([
+                'id_users' => $nilai->id_users,
                 'id_siswa' => $nilai->id,
                 'kriteria_1' => $nilai->kriteria_1,
                 'kriteria_2' => $nilai->kriteria_2,
@@ -355,10 +392,9 @@ class DataSiswaController extends Controller
                 'kriteria_5' => $nilai->kriteria_5,
                 'kriteria_6' => $nilai->kriteria_6,
                 'sudah_diajukan' => true,
-                'id_periode' => $periodeTerbuka->id,
+                'id_periode' => $periodeTerbaru->id,
             ]);
         }
-        Session::flash('success', 'Data siswa berhasil diajukan.');
-        return redirect('/datasiswa');
+        return redirect()->back()->with('success', 'Pengajuan berhasil!');
     }
 }

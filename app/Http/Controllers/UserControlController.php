@@ -129,12 +129,38 @@ class UserControlController extends Controller
 
         return redirect('/usercontrol');
     }
-    function hapus(Request $request)
-    {
-        User::where('id', $request->id)->delete();
+    public function hapus(Request $request){
+        \DB::transaction(function () use ($request) {
+            // Mencari User berdasarkan ID
+            $user = User::findOrFail($request->id);
 
+            // Menghapus semua penerimaan yang merujuk ke evaluasi dalam user ini
+            \DB::table('penerimaan')
+                ->whereIn('id_evaluasi', function($query) use ($request) {
+                    $query->select('id')
+                        ->from('evaluasi')
+                        ->where('id_users', $request->id);
+                })
+                ->delete();
+
+            // Menghapus semua evaluasi yang merujuk ke user ini
+            \DB::table('evaluasi')
+                ->where('id_users', $request->id)
+                ->delete();
+
+            // Menghapus semua data siswa yang merujuk ke user ini
+            \DB::table('datasiswa')
+                ->where('id_users', $request->id)
+                ->delete();
+
+            // Menghapus user
+            $user->delete();
+        });
+
+        // Mengirim pesan sukses ke session
         Session::flash('success', 'Data berhasil dihapus');
 
+        // Mengarahkan kembali ke halaman /usercontrol
         return redirect('/usercontrol');
     }
 }

@@ -23,24 +23,25 @@
 <li class="nav-item">
     <a class="nav-link" href="/datasiswa">
         <i class="fas fa-fw fa-folder"></i>
-        <span>Data Siswa</span></a>
+        <span>Data Siswa</span>
+    </a>
 </li>
 
-<!-- Nav Item - Rekomendasi -->
-<li class="nav-item">
-    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsehasil"
-        aria-expanded="true" aria-controls="collapsehasil">
-        <i class="fas fa-fw fa-table"></i>
-        <span>Rekomendasi</span>
-    </a>
-    <div id="collapsehasil" class="collapse" aria-labelledby="headinghasil" data-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">rekomendasi:</h6>
-            <a class="collapse-item" href="/hasil">Hasil Rekomendasi</a>
-            <a class="collapse-item" href="#">Riwayat</a>
-        </div>
-    </div>
-</li>
+    <!-- Nav Item - Rekomendasi -->
+    <li class="nav-item">
+        <a class="nav-link" href="/hasil">
+            <i class="fas fa-fw fa-table"></i>
+            <span>Rekomendasi</span>
+        </a>
+    </li>
+
+    <!-- Nav Item - Penerima -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="/penerima">
+            <i class="fas fa-fw fa-file-alt"></i>
+            <span>Penerima Beasiswa</span>
+        </a>
+    </li>
 
 
 <!-- Divider -->
@@ -55,14 +56,14 @@
 <!-- Nav Item - Koor -->
 <li class="nav-item">
     <a class="nav-link" href="{{ route('usercontrol') }}">
-        <i class="fas fa-fw fa-folder"></i>
+        <i class="fas fa-fw fa-users"></i>
         <span>Data Koordinator</span></a>
 </li>
 
 <!-- Nav Item - Periode -->
 <li class="nav-item">
     <a class="nav-link" href="{{ route('periode') }}">
-        <i class="fas fa-fw fa-chart-area"></i>
+        <i class="fas fa-fw fa-calendar-alt"></i>
         <span>Periode</span></a>
 </li>
 
@@ -102,20 +103,12 @@
                     <span>Data Siswa</span></a>
             </li>
 
-            <!-- Nav Item - Rekomendasi -->
+            <!-- Nav Item - Penerima -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsehasil"
-                    aria-expanded="true" aria-controls="collapsehasil">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Rekomendasi</span>
+                <a class="nav-link collapsed" href="/penerima">
+                    <i class="fas fa-fw fa-file-alt"></i>
+                    <span>Penerima Beasiswa</span>
                 </a>
-                <div id="collapsehasil" class="collapse" aria-labelledby="headinghasil" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">rekomendasi:</h6>
-                        <a class="collapse-item" href="/hasil">Hasil Rekomendasi</a>
-                        <a class="collapse-item" href="#">Riwayat</a>
-                    </div>
-                </div>
             </li>
 
             <!-- Divider -->
@@ -151,40 +144,71 @@
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                
-            {{-- new --}}
-            @if (Auth::user()->role === 'user') 
-                <a href="/siswatambah" class="btn-sm btn-primary text-decoration-none">Tambah data</a>
-
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $item)
-                                <li>{{ $item }}</li>
+                <div class="row mb-3">
+                    <div class="col-10">
+                    <form action="{{ route('datasiswa.show') }}" method="POST">
+                        @csrf
+                    <div class="row mb-3">
+                        <div class="col-2">
+                            <h4>Pilih Periode :</h4>
+                        </div>
+                        <div class="col-4">
+                            <select name="id" class="form-control">
+                            @foreach($dataPeriode as $value)
+                                <option value="{{ $value->id }}" {{ (isset($periode) && $periode == $value->id) ? 'selected' : '' }}>
+                                    {{ $value->nama_periode }} : {{ $value->tgl_buka }} sampai {{ $value->tgl_tutup}}
+                                </option>
                             @endforeach
-                        </ul>
+                            </select>
+                        </div>
+                        <div class="col-4">
+                            <button type="submit" class="btn btn-primary" >Pilih</button>
+                        </div>
                     </div>
-                @endif
-                @if (Session::has('success'))
-                    <script>
-                        document.addEventListener('DOMContentLoaded', function() {
-                            Swal.fire(
-                                'Sukses',
-                                '{{ Session::get('success') }}',
-                                'success'
-                            );
-                        });
-                    </script>
-                @endif
-            @endif
+                    </form>
+                    </div>
+                    <div class="col-2">
+                    {{-- new --}}
+                        @if (Auth::user()->role === 'user') 
+                            <a href="/siswatambah" class="btn btn-primary">Tambah data</a>
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $item)
+                                            <li>{{ $item }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+                            @if (Session::has('success'))
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        Swal.fire(
+                                            'Sukses',
+                                            '{{ Session::get('success') }}',
+                                            'success'
+                                        );
+                                    });
+                                </script>
+                            @endif
+                        @endif
+                    </div>
+                </div>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
+                    @isset($periode)
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>Nama</th>
+                                <th>No</th>
+                                @if (Auth::user()->role === 'admin') 
+                                <th>Nama Lembaga</th>
+                                @endif
+                                <th>Nama Siswa</th>
+                                @if (Auth::user()->role === 'user') 
                                 <th>NIK</th>
+                                @endif
                                 <th>Jenjang</th>
                                 <th>Sekolah</th>
                                 <th>Action</th>
@@ -196,8 +220,14 @@
                         <tbody>
                             @foreach ($data as $item)
                                 <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    @if (Auth::user()->role === 'admin') 
+                                    <td>{{ $item->user->nama_lembaga }}</td>
+                                    @endif
                                     <td>{{ $item->nama }}</td>
+                                    @if (Auth::user()->role === 'user') 
                                     <td>{{ $item->nik }}</td>
+                                    @endif
                                     <td>{{ $item->jenjang }}</td>
                                     <td>{{ $item->sekolah }}</td>
                                     <td><a href="/siswadetail/{{ $item->id }}" class="btn-sm btn-secondary text-decoration-none">Detail</a> |
@@ -213,22 +243,20 @@
                                         <form onsubmit="return confirmAju(event)" method="post" action="/ajukan/{{ $item->id }}">
                                             @csrf
                                             @php
-                                                $periodeTerbaru = \App\Models\Periode::where('status_periode', 'buka')->latest()->first();
                                                 $evaluasiTerbaru = \App\Models\Evaluasi::where('id_siswa', $item->id)
                                                     ->where('id_periode', $periodeTerbaru->id ?? null)
                                                     ->first();
                                             @endphp
-
-                                            @if ($periodeTerbaru)
+                                            @if ($periodeTerbaru && $periodeTerbaru->status_periode === 'buka')
                                                 @if ($evaluasiTerbaru && $evaluasiTerbaru->sudah_diajukan)
                                                     <button type="button" style="background-color: green; color: white;" disabled>Sudah Diajukan</button>
                                                 @else
                                                     <input type="hidden" name="id_periode" value="{{ $periodeTerbaru->id }}">
-                                                    <input type="hidden" name="status_periode" value="{{ $periodeTerbaru->status_periode }}">
+                                                    
                                                     <button type="submit">Ajukan</button>
                                                 @endif
                                             @else
-                                            <button type="button" style="background-color: #E74C3C; color: white;" disabled>Sudah Ditutup</button>
+                                                <button type="button" style="background-color: #E74C3C; color: white;" disabled>Sudah Ditutup</button>
                                             @endif
                                         </form>
                                     </td>
@@ -237,6 +265,7 @@
                             @endforeach
                         </tbody>
                     </table>
+                    @endisset
                 </div>
             </div>
         </div>

@@ -16,11 +16,11 @@
                 <form class="forms-sample" method="POST" action="/tambahuc" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-3">
-                        <label for="gambar" class="form-label">Gambar</label>
+                        <label for="gambar" class="form-label">Foto</label>
                         <input class="form-control" type="file" id="gambar" name="gambar">
                     </div>
                     <div class="form-group">
-                        <label for="email">Email address</label>
+                        <label for="email">Email</label>
                         <input type="email" class="form-control" id="email" placeholder="Masukkan Email."
                             name="email" required>
                     </div>

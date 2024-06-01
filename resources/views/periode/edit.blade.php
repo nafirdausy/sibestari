@@ -30,6 +30,10 @@
                         <input type="date" name="tgl_tutup" class="form-control" value="{{ $periode->tgl_tutup }}">
                     </div>
                     <div class="form-group">
+                        <label for="tgl_buka">Tanggal Pengumuman</label>
+                        <input type="date" name="tgl_pengumuman" class="form-control" value="{{ $periode->tgl_tutup }}">
+                    </div>
+                    <div class="form-group">
                         <label for="kuota">Kuota</label>
                         <input type="number" class="form-control" placeholder="Masukkan Jumlah Kuota."
                             name="kuota" value="{{ $periode->kuota }}">

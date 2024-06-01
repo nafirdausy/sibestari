@@ -4,7 +4,7 @@
         <div class="col-md-12 grid-margin">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
-                    <h4 class="font-weight-bold mb-0 ml-5">Periode</h4>
+                    <h1 class="h3 mb-2 ml-4 text-gray-800">Periode</h1>
                 </div>
                 <div>
                     <a href="/tambahperiode" class="text-decoration-none text-white mr-5">
@@ -59,6 +59,7 @@
                                 <td>
                                     <div><b>Tanggal Pendaftaran Dibuka  :</b> {{ $item->tgl_buka }}</div>
                                     <div><b>Tanggal Pendaftaran Ditutup :</b>  {{ $item->tgl_tutup }}</div>
+                                    <div><b>Tanggal Pengumuman          :</b>  {{ $item->tgl_pengumuman }}</div>
                                 </td>
                                 @if ($item->status_periode === 'buka')
                                     <td><a class="btn-sm btn-secondary text-decoration-none" disable 

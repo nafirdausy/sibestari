@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('datasiswa', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('id_users')->constrained('users');
             $table->string('nama');
             $table->string('nik')->unique();
             $table->enum('jenis_kelamin', ['laki-Laki', 'perempuan']);
@@ -65,5 +66,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('datasiswa');
+        //Schema::table('data_siswa', function (Blueprint $table) {
+        //    $table->dropForeign(['id_users']);
+        //    $table->dropColumn('id_users');
+        //});
     }
 };

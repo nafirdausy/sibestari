@@ -30,8 +30,8 @@
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
-                                <div class="text-s font-weight-bold text-primary text-uppercase mb-1">Periode Ke-</div>
-                                <div class="h6 mb-0 font-weight-bold text-gray-800">Tanggal: ... - ...</div>
+                                <div class="text-s font-weight-bold text-primary text-uppercase mb-1">Periode Ke- {{ $lastPeriode->nama_periode }}</div>
+                                <div class="h6 mb-0 font-weight-bold text-gray-800">Tanggal Buka: {{ $lastPeriode->tgl_buka }} Tanggal Tutup: {{ $lastPeriode->tgl_tutup }} </div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -48,7 +48,7 @@
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                             <div class="text-s font-weight-bold text-primary text-uppercase mb-1">Kuota Penerima</div>
-                                <div class="h6 mb-0 font-weight-bold text-gray-800">... Siswa</div>
+                                <div class="h6 mb-0 font-weight-bold text-gray-800">{{ $lastPeriode->kuota }} Siswa</div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
@@ -65,7 +65,7 @@
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-s font-weight-bold text-warning text-uppercase mb-1">Pengumuman</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">...</div>
+                                <div class="h6 mb-0 font-weight-bold text-gray-800">{{ $lastPeriode->pengumuman }}</div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-bullhorn fa-2x text-gray-300"></i>
@@ -83,7 +83,7 @@
                             <div class="col mr-2">
                                 <div class="text-s font-weight-bold text-success text-uppercase mb-1">
                                     Total Koordinator</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">... </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{$jumlahKoor}} </div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-user fa-2x text-gray-300"></i>
@@ -129,15 +129,70 @@
                         </div>
                         <div class="mt-4 text-center small">
                             <span class="mr-2">
-                                <i class="fas fa-circle text-primary"></i> Diterima
                             </span>
                             <span class="mr-2">
-                                <i class="fas fa-circle text-info"></i> Ditolak
                             </span>
                         </div>
                     </div>
                 </div>
             </div>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    // Data untuk Bar Chart
+                    var dataPenerima = @json($dataPenerima);
+
+                    var ctxBar = document.getElementById('myBarChart').getContext('2d');
+                    var labels = dataPenerima.map(function(item) {
+                        return item.jenjang;
+                    });
+
+                    var data = dataPenerima.map(function(item) {
+                        return item.total;
+                    });
+
+                    var myBarChart = new Chart(ctxBar, {
+                        type: 'bar',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: "Total Penerima",
+                                backgroundColor: "#4e73df",
+                                hoverBackgroundColor: "#2e59d9",
+                                borderColor: "#4e73df",
+                                data: data,
+                            }],
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+
+                    // Data untuk Pie Chart
+                    var totalEvaluasi = @json($totalEvaluasi);
+                    var totalPenerimaan = @json($totalPenerimaan);
+
+                    var ctxPie = document.getElementById("myPieChart").getContext('2d');
+                    var myPieChart = new Chart(ctxPie, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ["Diterima", "Ditolak"],
+                        datasets: [{
+                        data: [totalPenerimaan, totalEvaluasi - totalPenerimaan],
+                        backgroundColor: ['#4e73df', '#1cc88a'],
+                        hoverBackgroundColor: ['#2e59d9', '#17a673'],
+                        hoverBorderColor: "rgba(234, 236, 244, 1)",
+                        }],
+                    },
+                    });
+                });
+            </script>
         </div>
 
     </div>

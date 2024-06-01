@@ -12,6 +12,7 @@ class Evaluasi extends Model
     protected $table = 'evaluasi';
 
     protected $fillable = [
+        'id_users',
         'id_siswa',
         'id_periode',
         'kriteria_1',
@@ -20,7 +21,8 @@ class Evaluasi extends Model
         'kriteria_4',
         'kriteria_5',
         'kriteria_6',
-        'sudah_diajukan'
+        'sudah_diajukan',
+        'hasil'
     ];
 
     public function alternative()
@@ -31,5 +33,15 @@ class Evaluasi extends Model
     public function period()
     {
         return $this->belongsTo(Periode::class, 'id_periode');
+    }
+    
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id_users');
+    }
+
+    public function penerimaan()
+    {
+        return $this->hasMany(Penerimaan::class, 'id_periode');
     }
 }

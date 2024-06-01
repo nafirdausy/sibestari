@@ -24,20 +24,12 @@
             <span>Data Siswa</span></a>
     </li>
 
-    <!-- Nav Item - Rekomendasi -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsehasil"
-            aria-expanded="true" aria-controls="collapsehasil">
-            <i class="fas fa-fw fa-table"></i>
-            <span>Rekomendasi</span>
+     <!-- Nav Item - Penerima -->
+     <li class="nav-item">
+        <a class="nav-link collapsed" href="/penerima">
+            <i class="fas fa-fw fa-file-alt"></i>
+            <span>Penerima Beasiswa</span>
         </a>
-        <div id="collapsehasil" class="collapse" aria-labelledby="headinghasil" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">rekomendasi:</h6>
-                <a class="collapse-item" href="/hasil">Hasil Rekomendasi</a>
-                <a class="collapse-item" href="#">Riwayat</a>
-            </div>
-        </div>
     </li>
 
                <!-- Divider -->

@@ -29,6 +29,10 @@
                         <input type="date" name="tgl_tutup" class="form-control">
                     </div>
                     <div class="form-group">
+                        <label for="tgl_buka">Tanggal Pengumuman</label>
+                        <input type="date" name="tgl_pengumuman" class="form-control">
+                    </div>
+                    <div class="form-group">
                         <label for="kuota">Kuota</label>
                         <input type="number" class="form-control" id="kuota" placeholder="Masukkan Jumlah Kuota."
                             name="kuota">

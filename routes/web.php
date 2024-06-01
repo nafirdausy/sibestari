@@ -8,6 +8,7 @@ use App\Http\Controllers\PeriodeController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HasilPerhitunganController;
+use App\Http\Controllers\PenerimaanController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -51,7 +52,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/editsiswa', [DataSiswaController::class, 'change']);
 
     //ajukan
-    Route::post('/ajukan/{id}', [DataSiswaController::class, 'ajukan']);
+    Route::post('/ajukan/{id}', [DataSiswaController::class, 'ajukan'])->name('ajukan');
+    Route::post('/datasiswa', [DataSiswaController::class, 'show'])->name('datasiswa.show');
     
     Route::get('/usercontrol', [UserControlController::class, 'index'])->name('usercontrol');
     Route::get('/tambahuc', [UserControlController::class, 'tambah']);
@@ -71,9 +73,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/hasil', [HasilPerhitunganController::class, 'index'])->name('hasil.index');
     Route::get('/create', [HasilPerhitunganController::class, 'create'])->name('hasil.create');
     Route::post('/store', [HasilPerhitunganController::class, 'store'])->name('hasil.store');
+    Route::post('/penerimahapus/{id}', [HasilPerhitunganController::class, 'hapus'])->name('hasil.hapus');
+    Route::post('/terima/{id}', [HasilPerhitunganController::class, 'terima'])->name('hasil.terima');
+    Route::post('/hasil', [HasilPerhitunganController::class, 'showRiwayat'])->name('hasil.showRiwayat');
 
+    Route::get('/penerima', [PenerimaanController::class, 'index'])->name('penerima');
+    Route::post('/penerima', [PenerimaanController::class, 'showRiwayat'])->name('penerima.showRiwayat');
+    Route::get('/cetak/{id_periode}', [PenerimaanController::class, 'cetak'])->name('penerima.cetak');
     
-
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 });

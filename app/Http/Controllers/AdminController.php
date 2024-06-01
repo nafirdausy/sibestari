@@ -7,16 +7,46 @@ use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 
 use App\Models\User;
+use App\Models\Periode;
+use App\Models\Penerimaan;
+use App\Models\DataSiswa;
+use App\Models\Evaluasi;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
+use DB;
 
 class AdminController extends Controller
 {
-    function index()
+    public function index()
     {
-        return view('admin/index');
+        $jumlahKoor = User::where('role', 'user')->count();
+        $lastPeriode = Periode::latest()->first();
+
+        $user = Auth::user();
+        $query = Penerimaan::query();
+
+        //if ($user->role != 'admin') {
+        //    $query->where('penerimaan.id_users', $user->id);
+        //}
+
+        $dataPenerima = $query->select('datasiswa.jenjang', DB::raw('count(*) as total'))
+                              ->join('datasiswa', 'penerimaan.id_siswa', '=', 'datasiswa.id')
+                              ->groupBy('datasiswa.jenjang')
+                              ->get();
+
+        // Hitung total evaluasi dan penerimaan
+        $totalEvaluasi = Evaluasi::count();
+        $totalPenerimaan = Penerimaan::count();
+
+        return view('admin.index', [
+            'jumlahKoor' => $jumlahKoor, 
+            'lastPeriode' => $lastPeriode, 
+            'dataPenerima' => $dataPenerima,
+            'totalEvaluasi' => $totalEvaluasi,
+            'totalPenerimaan' => $totalPenerimaan
+        ]);
     }
 
     function profile()

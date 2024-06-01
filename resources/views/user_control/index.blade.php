@@ -4,7 +4,7 @@
         <div class="col-md-12 grid-margin">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
-                    <h4 class="font-weight-bold mb-0 ml-5">Data Koordinator</h4>
+                    <h1 class="h3 mb-2 ml-4 text-gray-800">Data Koordinator</h1>
                 </div>
                 <div>
                     <a href="/tambahuc" class="text-decoration-none text-white mr-5">
